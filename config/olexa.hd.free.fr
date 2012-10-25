@@ -1,0 +1,92 @@
+server {
+  listen 8080;
+  server_name olexa.hd.free.fr localhost;
+  root /mnt/HD/HD_a2/www;
+
+#  error_log /var/log/nginx/error.log debug;
+
+  auth_basic "Restricted";
+  auth_basic_user_file /mnt/HD/HD_a2/www/config/.htpasswd;
+
+  location /server-status {
+    stub_status on;
+    auth_basic off;
+    allow 127.0.0.1;
+    allow 192.168.1.0/24;
+    deny all;
+  }
+
+  location /config/ {
+    deny all;
+  }
+  
+  location / {
+    proxy_pass http://localhost:80;
+  }
+  
+  location /resources/ {
+    expires 24h;
+  }
+
+  location /album/ {
+    try_files request_uri @album;
+  }
+  
+  location @album {
+    proxy_pass http://localhost:8081;
+    sub_filter <hr> '<hr/>';
+    sub_filter_once off;
+    xslt_stylesheet /mnt/HD/HD_a2/www/config/autoindex.xslt;
+    xslt_types text/html;
+  }
+
+  location ~ ^/album/.*\.(jpg|JPG)$ {
+    if ($args ~ size=([0-9]+)) {
+      set $size $1;
+      rewrite ^(/album/)(.*)$ /resized/$size/$2? last;
+    }
+  }
+
+  location ~ ^/resized/[0-9]+/.* {
+    try_files request_uri @resized;
+  }
+
+  location @resized {
+    proxy_temp_path /mnt/HD/HD_a2/www;
+    proxy_store on;
+    proxy_store_access group:rw all:rw;
+    proxy_pass http://localhost:8081;
+  }
+
+  
+
+}
+
+server {
+  listen 8081;
+  server_name localhost;
+  root /mnt/HD/HD_a2/www;
+
+  location /album/ {
+    autoindex on;
+  }
+  
+  location ~ ^/album/.*\.(jpg|JPG)$ {
+    set $width '-';
+    set $height '-';
+    if ($args ~ width=([0-9]+)) {
+      set $width $1;
+    } 
+    if ($args ~ height=([0-9]+)) {
+      set $height $1;
+    } 
+    image_filter_buffer 4M;
+    image_filter resize $width $height;
+  }
+  
+  location ~ ^/resized/([0-9]+)/.*\.(jpg|JPG)$ {
+    set $width $1;
+    set $height $1;
+    rewrite ^/resized/([0-9]+)/(.*)$ /album/$2?width=$width&height=$height last;
+  }
+}

@@ -1,0 +1,64 @@
+body{
+  color: #aaa;
+  background-color: #000;
+}
+
+h1{
+  font-size: 1.5em;
+  margin: 0 10px;
+  border-bottom: 1px solid #aaa;
+}
+
+h1 a{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+#galleria{
+  float: left;
+  width: 80%;
+  margin-top: 20px;
+  margin-left: -1px;
+  border-left: 1px solid #aaa;
+}
+
+#menu{
+  float: left;
+  margin-top: 20px;
+  border-right: 1px solid #aaa;
+  width: 19%;
+}
+#navigation{
+  float: left;
+  padding-left: 20px;
+  list-style: none;
+}
+li{
+  margin-right: 10px;
+}
+a{
+  color: #aaa;
+  text-decoration: none;
+}
+#navigation a:visited{
+  color: #666;
+}
+a:hover, #navigation a:hover{
+  color: #fff;
+}
+.galleria-controls{
+  padding: 2px;
+  margin-left: 20px;
+}
+.galleria-fullscreen, .galleria-slideshow{
+  display: inline;
+  padding: 2px 5px;
+  margin: 2px 5px;
+  z-index: 10;
+  border: 1px solid #aaa;
+  border-right: 2px solid #aaa;
+  border-bottom: 2px solid #aaa;
+  cursor: pointer;
+}
+.galleria-stage{
+  margin-top: 20px;
+}
