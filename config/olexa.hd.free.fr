@@ -29,7 +29,7 @@ server {
   }
 
   location /album/ {
-    try_files request_uri @album;
+    try_files $uri $uri/ @album;
   }
   
   location @album {
@@ -48,7 +48,7 @@ server {
   }
 
   location ~ ^/resized/[0-9]+/.* {
-    try_files request_uri @resized;
+    try_files $uri @resized;
   }
 
   location @resized {
@@ -67,7 +67,7 @@ server {
   server_name localhost;
   root /mnt/HD/HD_a2/www;
 
-  location /album/ {
+  location /album {
     autoindex on;
   }
   
