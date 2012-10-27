@@ -29,10 +29,6 @@ server {
   }
 
   location /album/ {
-    try_files $uri $uri/ @album;
-  }
-  
-  location @album {
     proxy_pass http://localhost:8081;
     sub_filter <hr> '<hr/>';
     sub_filter_once off;
