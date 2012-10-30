@@ -5,6 +5,9 @@ server {
 
 #  error_log /var/log/nginx/error.log debug;
 
+  satisfy any;
+  allow 127.0.0.1;
+  deny all;
   auth_basic "Restricted";
   auth_basic_user_file /mnt/HD/HD_a2/www/config/.htpasswd;
 
@@ -13,6 +16,10 @@ server {
     auth_basic off;
     allow 127.0.0.1;
     allow 192.168.1.0/24;
+    deny all;
+  }
+
+  location /bin/ {
     deny all;
   }
 
@@ -76,7 +83,7 @@ server {
     if ($args ~ height=([0-9]+)) {
       set $height $1;
     } 
-    image_filter_buffer 4M;
+    image_filter_buffer 6M;
     image_filter resize $width $height;
   }
   

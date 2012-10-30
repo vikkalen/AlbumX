@@ -1,0 +1,8 @@
+APP_HOME=/mnt/HD/HD_a2/www
+SIZE_THUMB=100
+SIZE_FULL=800
+ALBUM_DIR=album
+RESIZED_DIR=resized
+CACHE_DIR=cache
+ALBUM_SRV=http://localhost:8080
+
