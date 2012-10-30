@@ -13,7 +13,15 @@ then
   then
     echo "[$(date)] $0 is already running with pid $pid" >&2
     exit 1
+  else
+    rm $PIDFLIE
   fi
+fi
+
+DOFILE=$BIN_DIR/synchronize.done
+if [ ! -f "$DOFILE" ]
+  echo "[$(date)] nothing to do" >&2
+  exit 1
 fi
 
 echo -n $$ > $PIDFILE
@@ -92,7 +100,5 @@ do
 
 done
 
-rm $PIDFILE
-done
-
+rm $DOFILE
 rm $PIDFILE
