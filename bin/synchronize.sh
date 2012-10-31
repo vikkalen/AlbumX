@@ -23,27 +23,17 @@ SRV=192.168.0.21
 SRC=Pictures/
 DST=/mnt/HD/HD_a2/Pictures/
 DOFILE=$BIN_DIR/synchronize.done
-DOFILETMP=$BIN_DIR/synchronize.done.tmp
 
-if [ -f "$DOFILETMP" ]
-then
-  mv "$DOFILETMP" "$DOFILE"
-fi
+ret=1
+while [ $ret -gt 0 ]
+do
+  ping -c1 $SRV >/dev/null
+  ret=$?
+  sleep 60
+done
 
-ping -c1 $SRV >/dev/null
-if [ $? -eq 0 ]
-then
-  echo "[$(date)] synchronizing..."
-  touch "$DOFILETMP"
-  res=$(rsync -av --delete $@ $USR@$SRV:$SRC $DST | egrep -e "\.[jJ][pP][gG]$" | egrep -ve "^deleting ")
-  if [ -n "$res" ]
-  then
-    touch "$DOFILE"
-  fi
-  rm "$DOFILETMP"
-  echo "[$(date)] synchronized"
-else
-  echo "[$(date)] cannot reach $SRV"
-fi
+echo "[$(date)] synchronizing..."
+rsync -av --delete $@ $USR@$SRV:$SRC $DST | egrep -e "\.[jJ][pP][gG]$" | egrep -ve "^deleting " >> $DOFILE
+echo "[$(date)] synchronized"
 
 rm $PIDFILE

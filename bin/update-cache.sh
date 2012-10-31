@@ -14,32 +14,26 @@ then
     echo "[$(date)] $0 is already running with pid $pid" >&2
     exit 1
   else
-    rm $PIDFLIE
+    rm $PIDFILE
   fi
 fi
 
 DOFILE=$BIN_DIR/synchronize.done
-if [ ! -f "$DOFILE" ]
-  echo "[$(date)] nothing to do" >&2
-  exit 1
+DOFILETMP=$BIN_DIR/synchronize.done.tmp
+if [ ! -f "$DOFILETMP" ]
+then
+  if [ "$DOFILE" ]
+  then
+    mv "$DOFILE" "$DOFILETMP"
+  else
+    echo "[$(date)] nothing to do" >&2
+    exit 1
+  fi
 fi
 
 echo -n $$ > $PIDFILE
 
 SRC=$APP_HOME/$ALBUM_DIR/
-
-function remove {
-  src=$1
-  dst=$2
-  if [ "$src" -nt "$dst" ]
-  then
-    if [ -f "$dst" ]
-    then
-      rm "$dst"
-      echo "[$(date)] remove $dst";
-    fi
-  fi
-}
 
 function update {
   src="$1"
@@ -48,8 +42,15 @@ function update {
 
   cache="$APP_HOME/$CACHE_DIR/$size/$hash"
   dst="$APP_HOME/$RESIZED_DIR/$size/${src#$SRC}"
-
-  remove "$src" "$dst"
+  
+  if [ "$src" -nt "$dst" ]
+  then
+    if [ -f "$dst" ]
+    then
+      rm "$dst"
+      echo "[$(date)] remove $dst";
+    fi
+  fi
 
   if [ ! -f "$cache" ]
   then
@@ -74,8 +75,9 @@ function update {
   fi
 }
 
-find -L $SRC -type f -name "*.[jJ][pP][gG]" | while read src_file
+cat "$DOFILETMP" | while read src_file
 do
+  src_file="$SRC${src_file#$SRC}"
   echo "[$(date)] $src_file" >&2;
 
   hash=$(md5sum "$src_file" | cut -d\  -f1)
@@ -86,5 +88,5 @@ do
 
 done
 
-rm $DOFILE
+rm $DOFILETMP
 rm $PIDFILE
