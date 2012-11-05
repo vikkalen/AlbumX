@@ -22,7 +22,7 @@ DOFILE=$BIN_DIR/synchronize.done
 DOFILETMP=$BIN_DIR/synchronize.done.tmp
 if [ ! -f "$DOFILETMP" ]
 then
-  if [ "$DOFILE" ]
+  if [ -f "$DOFILE" ]
   then
     mv "$DOFILE" "$DOFILETMP"
   else
@@ -34,6 +34,15 @@ fi
 echo -n $$ > $PIDFILE
 
 SRC=$APP_HOME/$ALBUM_DIR/
+
+function create_resized_dir {
+  parent=$(dirname "$1")
+  if [ ! -d "$parent" ]
+  then
+    create_resized_dir "$parent"
+  fi
+  mkdir -p -m 2775 "$1"
+}
 
 function update {
   src="$1"
@@ -68,7 +77,7 @@ function update {
     fi
   elif [ ! -f "$dst" ]
   then
-    mkdir -p "${dst%/*}"
+    create_resized_dir "${dst%/*}"
     cp "$cache" "$dst"
     touch "$dst" -r "$src"
     echo "[$(date)] cache $dst";
