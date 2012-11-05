@@ -24,16 +24,12 @@ SRC=Pictures/
 DST=/mnt/HD/HD_a2/Pictures/
 DOFILE=$BIN_DIR/synchronize.done
 
-ret=1
-while [ $ret -gt 0 ]
-do
-  ping -c1 $SRV >/dev/null
-  ret=$?
-  sleep 60
-done
-
-echo "[$(date)] synchronizing..."
-rsync -av --delete $@ $USR@$SRV:$SRC $DST | egrep -e "\.[jJ][pP][gG]$" | egrep -ve "^deleting " >> $DOFILE
-echo "[$(date)] synchronized"
+ping -q -i 60 -c 180 $SRV >/dev/null
+if [ $? -eq 0 ]
+then
+  echo "[$(date)] synchronizing..."
+  rsync -av --delete $@ $USR@$SRV:$SRC $DST | egrep -e "\.[jJ][pP][gG]$" | egrep -ve "^deleting " >> $DOFILE
+  echo "[$(date)] synchronized"
+fi
 
 rm $PIDFILE
