@@ -24,7 +24,7 @@ SRC=Pictures/*
 DST=/mnt/HD/HD_a2/Pictures/
 DOFILE=$BIN_DIR/synchronize.done
 
-while true; do ping -q -c1 $SRV >/dev/null && break; sleep 60; done
+while true; do netcat -z $SRV 22 >/dev/null && break; sleep 60; done
 echo "[$(date)] synchronizing..."
 rsync -av --delete $@ $USR@$SRV:$SRC $DST | egrep -e "\.[jJ][pP][gG]$" | egrep -ve "^deleting " >> $DOFILE
 ret=$?
