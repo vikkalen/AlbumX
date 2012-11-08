@@ -99,8 +99,8 @@
 </xsl:template>
 
 <xsl:template match="a" mode="image">
-  <xsl:variable name="extension" select="substring(@href, string-length(@href) - 3)"/>
-  <xsl:if test="translate($extension, 'JPG', 'jpg') = '.jpg'">
+  <xsl:variable name="extension" select="translate(substring(@href, string-length(@href) - 3), 'JPEG', 'jpeg')"/>
+  <xsl:if test="$extension = '.jpg' or $extension = 'jpeg'">
     <a href="{@href}?size=800">
       <img src="{@href}?size=100" data-link="{@href}"/>
     </a>

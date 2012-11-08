@@ -8,4 +8,4 @@ BIN_DIR=${BIN_PATH%/*}
 DOFILE=$BIN_DIR/synchronize.done
 SRC=$APP_HOME/$ALBUM_DIR/
 
-find -L $SRC -type f -name "*.[jJ][pP][gG]" -fprintf "$DOFILE" "%p\n"
+find -L $SRC -type f -regex ".*\.[jJ][pP][eE]?[gG]" -fprintf "$DOFILE" "%p\n"

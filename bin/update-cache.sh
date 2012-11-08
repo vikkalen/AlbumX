@@ -18,22 +18,7 @@ then
   fi
 fi
 
-DOFILE=$BIN_DIR/synchronize.done
-DOFILETMP=$BIN_DIR/synchronize.done.tmp
-if [ ! -f "$DOFILETMP" ]
-then
-  if [ -f "$DOFILE" ]
-  then
-    mv "$DOFILE" "$DOFILETMP"
-  else
-    echo "[$(date)] nothing to do" >&2
-    exit 1
-  fi
-fi
-
 echo -n $$ > $PIDFILE
-
-SRC=$APP_HOME/$ALBUM_DIR/
 
 function create_resized_dir {
   parent=$(dirname "$1")
@@ -84,18 +69,40 @@ function update {
   fi
 }
 
-cat "$DOFILETMP" | while read src_file
+function update_file {
+
+  cat "$1" | egrep -ve "^deleting " | while read src_file
+  do
+    src_file="$SRC${src_file#$SRC}"
+    echo "[$(date)] $src_file" >&2;
+
+    hash=$(md5sum "$src_file" | cut -d\  -f1)
+    hash_file=${hash:0:1}/${hash:1:2}/${hash:3}
+
+    update "$src_file" "$hash_file" "$SIZE_THUMB"
+    update "$src_file" "$hash_file" "$SIZE_FULL"
+
+  done
+}
+
+SRC=$APP_HOME/$ALBUM_DIR/
+
+DOFILE=$BIN_DIR/synchronize.done
+DOFILETMP=$BIN_DIR/synchronize.done.tmp
+
+while true
 do
-  src_file="$SRC${src_file#$SRC}"
-  echo "[$(date)] $src_file" >&2;
-
-  hash=$(md5sum "$src_file" | cut -d\  -f1)
-  hash_file=${hash:0:1}/${hash:1:2}/${hash:3}
-
-  update "$src_file" "$hash_file" "$SIZE_THUMB"
-  update "$src_file" "$hash_file" "$SIZE_FULL"
-
+  if [ -f "$DOFILETMP" ]
+  then
+    update_file "$DOFILETMP"
+    rm "$DOFILETMP"
+  fi
+  if [ -s "$DOFILE" ]
+  then
+    mv "$DOFILE" "$DOFILETMP"
+  else
+    sleep 300
+  fi
 done
 
-rm $DOFILETMP
 rm $PIDFILE

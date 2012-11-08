@@ -43,7 +43,7 @@ server {
     xslt_types text/html;
   }
 
-  location ~ ^/album/.*\.(jpg|JPG)$ {
+  location ~ ^/album/.*\.[jJ][pP][eE]?[gG]$ {
     if ($args ~ size=([0-9]+)) {
       set $size $1;
       rewrite ^(/album/)(.*)$ /resized/$size/$2? last;
@@ -74,7 +74,7 @@ server {
     autoindex on;
   }
   
-  location ~ ^/album/.*\.(jpg|JPG)$ {
+  location ~ ^/album/.*\.[jJ][pP][eE]?[gG]$ {
     set $width '-';
     set $height '-';
     if ($args ~ width=([0-9]+)) {
@@ -87,7 +87,7 @@ server {
     image_filter resize $width $height;
   }
   
-  location ~ ^/resized/([0-9]+)/.*\.(jpg|JPG)$ {
+  location ~ ^/resized/([0-9]+)/.*\.[jJ][pP][eE]?[gG]$ {
     set $width $1;
     set $height $1;
     rewrite ^/resized/([0-9]+)/(.*)$ /album/$2?width=$width&height=$height last;

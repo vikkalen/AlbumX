@@ -24,14 +24,10 @@ SRC=Pictures/*
 DST=/mnt/HD/HD_a2/Pictures/
 DOFILE=$BIN_DIR/synchronize.done
 
-while true; do netcat -z $SRV 22 >/dev/null && break; sleep 60; done
-echo "[$(date)] synchronizing..."
-rsync -av --delete $@ $USR@$SRV:$SRC $DST | egrep -e "\.[jJ][pP][gG]$" | egrep -ve "^deleting " >> $DOFILE
-ret=$?
-if [ $ret -gt 0 ]
-then
-  echo "[$(date)] error $ret"
-fi
-echo "[$(date)] synchronized"
-
+while true
+do
+  while true; do netcat -z $SRV 22 >/dev/null && break; sleep 60; done
+  rsync -av --delete $@ $USR@$SRV:$SRC $DST | egrep -e "\.[jJ][pP][eE]?[gG]$" >> $DOFILE
+  sleep 3600
+done
 rm $PIDFILE
