@@ -5,4 +5,7 @@ ALBUM_DIR=album
 RESIZED_DIR=resized
 CACHE_DIR=cache
 ALBUM_SRV=http://localhost:8080
+SYNC_SRV=127.0.0.1
+SYNC_PORT=8099
+SYNC_FILE=/tmp/synchronize.done
 

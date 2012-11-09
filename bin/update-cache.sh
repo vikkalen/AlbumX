@@ -87,22 +87,23 @@ function update_file {
 
 SRC=$APP_HOME/$ALBUM_DIR/
 
-DOFILE=$BIN_DIR/synchronize.done
-DOFILETMP=$BIN_DIR/synchronize.done.tmp
+DOFILE=$SYNC_FILE
+DOFILETMP=$SYNC_FILE.tmp
 
+if [ -f "$DOFILETMP" ]
+then
+  update_file "$DOFILETMP"
+  rm "$DOFILETMP"
+fi
 while true
 do
-  if [ -f "$DOFILETMP" ]
-  then
+  while [ -s "$DOFILE" ]
+  do
+    mv "$DOFILE" "$DOFILETMP"
     update_file "$DOFILETMP"
     rm "$DOFILETMP"
-  fi
-  if [ -s "$DOFILE" ]
-  then
-    mv "$DOFILE" "$DOFILETMP"
-  else
-    sleep 300
-  fi
+  done
+  netcat -l -p $SYNC_PORT
 done
 
 rm $PIDFILE
