@@ -3,43 +3,44 @@ server {
   server_name olexa.hd.free.fr localhost;
   root /mnt/HD/HD_a2/www;
 
-#  error_log /var/log/nginx/error.log debug;
-
   satisfy any;
   allow 127.0.0.1;
   deny all;
   auth_basic "Restricted";
-  auth_basic_user_file /mnt/HD/HD_a2/www/config/.htpasswd;
+  auth_basic_user_file .htpasswd;
 
   location /server-status {
+    access_log off;
+    error_log /dev/null crit;
     stub_status on;
     auth_basic off;
     allow 127.0.0.1;
     allow 192.168.1.0/24;
     deny all;
+    satisfy all;
   }
 
-  location /bin/ {
-    deny all;
-  }
-
-  location /config/ {
-    deny all;
-  }
-  
   location / {
     proxy_pass http://localhost:80;
+    access_log off;
+    error_log /dev/null crit;
   }
   
   location /resources/ {
+    auth_basic off;
+    allow all;
     expires 24h;
   }
 
   location /album/ {
-    proxy_pass http://localhost:8081;
+    proxy_pass http://unix:/tmp/album_backend.sock;
     sub_filter <hr> '<hr/>';
     sub_filter_once off;
-    xslt_stylesheet /mnt/HD/HD_a2/www/config/autoindex.xslt;
+    set $size_thumb 100;
+    set $size_full 800;
+    xslt_stylesheet autoindex.xslt
+      size_thumb='$size_thumb'
+      size_full='$size_full';
     xslt_types text/html;
   }
 
@@ -55,22 +56,19 @@ server {
   }
 
   location @resized {
-    proxy_temp_path /mnt/HD/HD_a2/www;
+    proxy_temp_path /mnt/HD/HD_a2/www/tmp;
     proxy_store on;
     proxy_store_access group:rw all:rw;
-    proxy_pass http://localhost:8081;
+    proxy_pass http://unix:/tmp/album_backend.sock;
   }
-
-  
 
 }
 
 server {
-  listen 8081;
-  server_name localhost;
+  listen unix:/tmp/album_backend.sock;
   root /mnt/HD/HD_a2/www;
 
-  location /album {
+  location /album/ {
     autoindex on;
   }
   

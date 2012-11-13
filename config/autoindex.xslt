@@ -2,6 +2,9 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:output method="html" version="4.0" encoding="iso-8859-1" indent="yes"/>
 
+<xsl:param name="size_thumb"/>
+<xsl:param name="size_full"/>
+
 <xsl:template match="@*">
   <xsl:copy />
 </xsl:template>
@@ -101,9 +104,13 @@
 <xsl:template match="a" mode="image">
   <xsl:variable name="extension" select="translate(substring(@href, string-length(@href) - 3), 'JPEG', 'jpeg')"/>
   <xsl:if test="$extension = '.jpg' or $extension = 'jpeg'">
-    <a href="{@href}?size=800">
-      <img src="{@href}?size=100" data-link="{@href}"/>
-    </a>
+    <xsl:element name="a">
+      <xsl:attribute name="href"><xsl:value-of select="@href"/>?size=<xsl:value-of select="$size_full"/></xsl:attribute>
+      <xsl:element name="img">
+        <xsl:attribute name="src"><xsl:value-of select="@href"/>?size=<xsl:value-of select="$size_thumb"/></xsl:attribute>
+        <xsl:attribute name="data-link"><xsl:value-of select="@href"/></xsl:attribute>
+      </xsl:element>
+    </xsl:element>
   </xsl:if>
 </xsl:template>
 
@@ -111,11 +118,12 @@
 <xsl:template match="a" mode="navigation">
   <xsl:variable name="lastchar" select="substring(@href, string-length(@href))"/>
   <xsl:if test="$lastchar = '/'">
-    <li>
-      <a href="{@href}">
+    <xsl:element name="li">
+      <xsl:element name="a">
+        <xsl:attribute name="href"><xsl:value-of select="@href"/></xsl:attribute>
         <xsl:value-of select="."/>
-      </a>
-    </li>
+      </xsl:element>
+    </xsl:element>
   </xsl:if>
 </xsl:template>
 

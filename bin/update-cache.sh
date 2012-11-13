@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BIN_PATH=$0
+BIN_PATH=$(readlink -f "$0")
 BIN_DIR=${BIN_PATH%/*}
 
 . $BIN_DIR/album.profile
