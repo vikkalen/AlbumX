@@ -18,19 +18,19 @@ fi
 
 echo -n $$ > $PIDFILE
 
-USR=michal
-SRV=192.168.0.21
-SRC=Pictures/*
-DST=/mnt/HD/HD_a2/Pictures/
+USR=$SYNC_SRC_USR
+SRV=$SYNC_SRC_SRV
+SRC=$SYNC_SRC
+DST=$DOCUMENT_ROOT$ALBUM_DIR
 DOFILE=$SYNC_FILE
 
 while true
 do
-  while true; do netcat -z $SRV 22 >/dev/null && break; sleep 60; done
-  rsync -av --delete $@ $USR@$SRV:$SRC $DST | egrep -e "\.[jJ][pP][eE]?[gG]$" >> $DOFILE
+  while true; do nc -z $SRV 22 >/dev/null && break; sleep 60; done
+  rsync -av --delete $@ $USR@$SRV:$SRC $DST/ | egrep -e "\.[jJ][pP][eE]?[gG]$" >> $DOFILE
   if [ $? -eq 0 ]
   then
-    netcat -q1 $SYNC_SRV $SYNC_PORT < $DOFILE
+    nc -q1 $SYNC_SRV $SYNC_PORT < $DOFILE
   fi
   sleep 3600
 done

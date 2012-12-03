@@ -34,8 +34,8 @@ function update {
   hash="$2"
   size="$3"
 
-  cache="$APP_HOME/$CACHE_DIR/$size/$hash"
-  dst="$APP_HOME/$RESIZED_DIR/$size/${src#$SRC}"
+  cache="$CACHE_PATH/$size/$hash"
+  dst="$DOCUMENT_ROOT$RESIZED_DIR/$size/${src#$SRC}"
   
   if [ "$src" -nt "$dst" ]
   then
@@ -49,8 +49,8 @@ function update {
   if [ ! -f "$cache" ]
   then
     mkdir -p "${cache%/*}"
-    base_url=${src#$APP_HOME}
-    url="$ALBUM_SRV$base_url?size=$size"
+    base_url=${src#$DOCUMENT_ROOT}
+    url="http://localhost:$PORT$base_url?size=$size"
     wget -q -O "$cache" "$url";
     ret=$?
     if [ $ret -eq 0 ]
@@ -85,7 +85,7 @@ function update_file {
   done
 }
 
-SRC=$APP_HOME/$ALBUM_DIR/
+SRC=$DOCUMENT_ROOT$ALBUM_DIR/
 
 DOFILE=$SYNC_FILE
 DOFILETMP=$SYNC_FILE.tmp
@@ -103,7 +103,7 @@ do
     update_file "$DOFILETMP"
     rm "$DOFILETMP"
   done
-  netcat -l -p $SYNC_PORT
+  nc -l -p $SYNC_PORT > /dev/null
 done
 
 rm $PIDFILE

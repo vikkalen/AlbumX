@@ -1,4 +1,3 @@
-/album
-/resized
-/cache
 /config/.htpasswd
+/build
+/custom.profile

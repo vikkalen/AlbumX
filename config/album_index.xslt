@@ -2,6 +2,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:output method="html" version="4.0" encoding="iso-8859-1" indent="yes"/>
 
+<xsl:param name="resources_dir"/>
 <xsl:param name="size_thumb"/>
 <xsl:param name="size_full"/>
 
@@ -18,12 +19,12 @@
 <xsl:template match="head">
   <xsl:copy>
     <xsl:apply-templates select="*"/>
-    <link rel="stylesheet" href="/resources/css/album.css" type="text/css"/>
-    <link rel="stylesheet" href="/resources/galleria/themes/classic/galleria.classic.css" type="text/css"/>
-    <script src="/resources/js/jquery-1.8.2.min.js"></script>
-    <script src="/resources/galleria/galleria-1.2.8.min.js"></script>
-    <script src="/resources/galleria/themes/classic/galleria.classic.min.js"></script>
-    <script src="/resources/js/album.js"></script>
+    <link rel="stylesheet" href="{$resources_dir}/css/album.css" type="text/css"/>
+    <link rel="stylesheet" href="{$resources_dir}/galleria/themes/classic/galleria.classic.css" type="text/css"/>
+    <script src="{$resources_dir}/js/jquery-1.8.2.min.js"></script>
+    <script src="{$resources_dir}/galleria/galleria-1.2.8.min.js"></script>
+    <script src="{$resources_dir}/galleria/themes/classic/galleria.classic.min.js"></script>
+    <script src="{$resources_dir}/js/album.js"></script>
   </xsl:copy>
 </xsl:template>
 
@@ -53,6 +54,12 @@
       </xsl:call-template>
     </xsl:otherwise>
   </xsl:choose>
+</xsl:template>
+
+<xsl:template match="body">
+  <xsl:element name="body" >
+    <xsl:apply-templates select="*"/>
+  </xsl:element>
 </xsl:template>
 
 <xsl:template match="h1">

@@ -6,7 +6,7 @@ BIN_DIR=${BIN_PATH%/*}
 . $BIN_DIR/album.profile
 
 DOFILE=$SYNC_FILE
-SRC=$APP_HOME/$ALBUM_DIR/
+SRC=$DOCUMENT_ROOT$ALBUM_DIR/
 
 find -L $SRC -type f -regex ".*\.[jJ][pP][eE]?[gG]" -fprintf "$DOFILE" "%p\n"
-netcat -q1 $SYNC_SRV $SYNC_PORT < "$DOFILE"
+nc -q1 $SYNC_SRV $SYNC_PORT < "$DOFILE"
