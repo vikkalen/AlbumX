@@ -5,18 +5,18 @@ BIN_DIR=${BIN_PATH%/*}
 
 . $BIN_DIR/album.profile
 
-PIDFILE=$BIN_DIR/synchronize.pid
-if [ -f "$PIDFILE" ]
-then
-  pid=$(cat $PIDFILE)
-  if [ -d "/proc/$pid" ]
-  then
-    echo "[$(date)] $0 is already running with pid $pid" >&2
-    exit 1
-  fi
-fi
-
-echo -n $$ > $PIDFILE
+#PIDFILE=$BIN_DIR/synchronize.pid
+#if [ -f "$PIDFILE" ]
+#then
+#  pid=$(cat $PIDFILE)
+#  if [ -d "/proc/$pid" ]
+#  then
+#    echo "[$(date)] $0 is already running with pid $pid" >&2
+#    exit 1
+#  fi
+#fi
+#
+#echo -n $$ > $PIDFILE
 
 USR=$SYNC_SRC_USR
 SRV=$SYNC_SRC_SRV
@@ -34,4 +34,4 @@ do
   fi
   sleep 3600
 done
-rm $PIDFILE
+#rm $PIDFILE

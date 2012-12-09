@@ -5,20 +5,20 @@ BIN_DIR=${BIN_PATH%/*}
 
 . $BIN_DIR/album.profile
 
-PIDFILE=$BIN_DIR/update-cache.pid
-if [ -f "$PIDFILE" ]
-then
-  pid=$(cat $PIDFILE)
-  if [ -d "/proc/$pid" ]
-  then
-    echo "[$(date)] $0 is already running with pid $pid" >&2
-    exit 1
-  else
-    rm $PIDFILE
-  fi
-fi
-
-echo -n $$ > $PIDFILE
+#PIDFILE=$BIN_DIR/update-cache.pid
+#if [ -f "$PIDFILE" ]
+#then
+#  pid=$(cat $PIDFILE)
+#  if [ -d "/proc/$pid" ]
+#  then
+#    echo "[$(date)] $0 is already running with pid $pid" >&2
+#    exit 1
+#  else
+#    rm $PIDFILE
+#  fi
+#fi
+#
+#echo -n $$ > $PIDFILE
 
 function create_resized_dir {
   parent=$(dirname "$1")
@@ -106,4 +106,4 @@ do
   nc -l -p $SYNC_PORT > /dev/null
 done
 
-rm $PIDFILE
+#rm $PIDFILE
