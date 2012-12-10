@@ -82,7 +82,7 @@ build/bin/%: bin/% build/bin build/bin/album.profile
 install_srv: all
 	su -c "\
 	cp build/config/album.conf /etc/nginx/$(FQDN);\
-	cp build/config/album_plugins.conf /etc/nginx/album_plugins.conf;\
+	cp build/config/album_plugins.conf /etc/nginx/$(FQDN)_plugins.conf;\
 	cp build/config/album_index.xslt $(XSLT_FILE);\
 	cp build/config/.htpasswd $(PASSWD_FILE);\
 	chmod 740 $(PASSWD_FILE);\
