@@ -45,20 +45,3 @@ a{
 a:hover, #navigation a:hover{
   color: #fff;
 }
-.galleria-controls{
-  padding: 2px;
-  margin-left: 20px;
-}
-.galleria-fullscreen, .galleria-slideshow{
-  display: inline;
-  padding: 2px 5px;
-  margin: 2px 5px;
-  z-index: 10;
-  border: 1px solid #aaa;
-  border-right: 2px solid #aaa;
-  border-bottom: 2px solid #aaa;
-  cursor: pointer;
-}
-.galleria-stage{
-  margin-top: 20px;
-}

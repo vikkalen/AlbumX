@@ -13,6 +13,7 @@ BACKEND_SOCK="/tmp/album_backend.sock"
 XSLT_FILE="/etc/nginx/album_index.xslt"
 SIZE_THUMB=100
 SIZE_FULL=800
+PLUGINS=galleria_controls
 
 SYNC_SRC_USR=album
 SYNC_SRC_SRV=sync.source
