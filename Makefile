@@ -49,6 +49,7 @@ build/config/%: config/% build/config
 	cp $< $@
 
 build/config/plugins.conf: build/config
+	rm $@
 	for dir in $(PLUGINS); do \
 	  if [ -d plugins/$$dir/config/ ]; then \
 	    cat plugins/$$dir/config/* >> $@; \
