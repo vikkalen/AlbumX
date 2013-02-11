@@ -1,9 +1,12 @@
 .galleria-controls{
   padding: 2px;
-  margin-left: 20px;
+  top: 10px;
+  left: 10px;
+  width: 90px;
+  position: absolute;
+  z-index: 2;
 }
 .galleria-fullscreen, .galleria-slideshow{
-  display: inline;
   padding: 2px 5px;
   margin: 2px 5px;
   z-index: 10;
@@ -12,6 +15,9 @@
   border-bottom: 2px solid #aaa;
   cursor: pointer;
 }
-.galleria-stage{
-  margin-top: 20px;
+.fullscreen .galleria-stage{
+  bottom: 10px;
+}
+.fullscreen .galleria-thumbnails-container{
+  display: none;
 }
