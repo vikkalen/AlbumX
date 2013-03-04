@@ -15,6 +15,10 @@
   border-bottom: 2px solid #aaa;
   cursor: pointer;
 }
+.galleria-controls .active{
+  color: #8e8;
+  border-color: #8e8;
+}
 .fullscreen .galleria-stage{
   bottom: 10px;
 }
