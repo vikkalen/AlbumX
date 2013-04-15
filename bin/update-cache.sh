@@ -51,6 +51,7 @@ function update {
     mkdir -p "${cache%/*}"
     base_url=${src#$DOCUMENT_ROOT}
     url="http://localhost:$PORT$base_url?size=$size"
+    while true; do nc -z localhost $PORT >/dev/null && break; sleep 60; done
     wget -q -O "$cache" "$url";
     ret=$?
     if [ $ret -eq 0 ]
@@ -93,6 +94,9 @@ DOFILETMP=$SYNC_FILE.tmp
 if [ -f "$DOFILETMP" ]
 then
   update_file "$DOFILETMP"
+  DATE=$(date +"%Y%m%d%H%M")
+  ARCHIVEFILE=$SYNC_FILE.$DATE.log
+  cat "$DOFILETMP" >> $ARCHIVEFILE
   rm "$DOFILETMP"
 fi
 while true
@@ -101,6 +105,9 @@ do
   do
     mv "$DOFILE" "$DOFILETMP"
     update_file "$DOFILETMP"
+    DATE=$(date +"%Y%m%d%H%M")
+    ARCHIVEFILE=$SYNC_FILE.$DATE.log
+    cat "$DOFILETMP" >> $ARCHIVEFILE
     rm "$DOFILETMP"
   done
   nc -l -p $SYNC_PORT > /dev/null
