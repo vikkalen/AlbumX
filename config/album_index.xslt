@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="{$resources_dir}/css/album.css" type="text/css"/>
     <link rel="stylesheet" href="{$resources_dir}/galleria/themes/classic/galleria.classic.css" type="text/css"/>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/galleria/1.2.8/galleria.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/galleria/1.2.9/galleria.min.js"></script>
     <script src="{$resources_dir}/galleria/themes/classic/galleria.classic.min.js"></script>
     <script src="{$resources_dir}/js/album.js"></script>
   </xsl:copy>
