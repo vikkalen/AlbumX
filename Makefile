@@ -7,6 +7,7 @@ sed \
 -e "s#\$$PORT#$(PORT)#g" \
 -e "s#\$$FQDN#$(FQDN)#g" \
 -e "s#\$$DOCUMENT_ROOT#$(DOCUMENT_ROOT)#g" \
+-e "s#\$$UNRESTRICTED_IP#$(UNRESTRICTED_IP)#g" \
 -e "s#\$$PASSWD_FILE#$(PASSWD_FILE)#g" \
 -e "s#\$$ALBUM_DIR#$(ALBUM_DIR)#g" \
 -e "s#\$$RESIZED_DIR#$(RESIZED_DIR)#g" \

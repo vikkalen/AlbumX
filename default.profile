@@ -2,6 +2,7 @@ PORT=8080
 FQDN="wiki.nginx.org"
 DOCUMENT_ROOT="/var/www"
 SRV_GROUP=www-data
+UNRESTRICTED_IP=127.0.0.1
 PASSWD_FILE="/etc/nginx/.htpasswd"
 ALBUM_DIR=""
 RESIZED_DIR="/.resized"
