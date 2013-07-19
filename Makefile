@@ -13,7 +13,8 @@ sed \
 -e "s#\$$RESOURCES_DIR#$(RESOURCES_DIR)#g" \
 -e "s#\$$CACHE_PATH#$(CACHE_PATH)#g" \
 -e "s#\$$TMP_PATH#$(TMP_PATH)#g" \
--e "s#\$$BACKEND_SOCK#$(BACKEND_SOCK)#g" \
+-e "s#\$$INDEX_BACKEND#$(INDEX_BACKEND)#g" \
+-e "s#\$$RESIZED_BACKEND#$(RESIZED_BACKEND)#g" \
 -e "s#\$$XSLT_FILE#$(XSLT_FILE)#g" \
 -e "s#\$$SIZE_THUMB#$(SIZE_THUMB)#g" \
 -e "s#\$$SIZE_FULL#$(SIZE_FULL)#g" \
