@@ -1,5 +1,7 @@
 #!/bin/bash
 
+trap 'kill -SIGTERM 0' EXIT
+
 BIN_PATH=$(readlink -f "$0")
 BIN_DIR=${BIN_PATH%/*}
 
