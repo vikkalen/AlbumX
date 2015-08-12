@@ -6,7 +6,7 @@
   position: absolute;
   z-index: 2;
 }
-.galleria-fullscreen, .galleria-slideshow{
+.galleria-controls > div{
   padding: 2px 5px;
   margin: 2px 5px;
   z-index: 10;
