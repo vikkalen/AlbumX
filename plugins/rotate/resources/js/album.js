@@ -8,8 +8,8 @@ Galleria.ready(function() {
     this.bind('loadfinish', function(e){
       gallery.rotate($(e.imageTarget), e.galleriaData, 0);
     });
-    this.bind("thumbnail", function(e) {
-      gallery.rotate($(e.thumbTarget), e.galleriaData, 0);
+    this.bind('rescale', function(e){
+      gallery.rotate($(gallery.getActiveImage()), gallery.getData(), 0);
     });
     this.rotate = function(img, data, rotate){
       var oldRotate = data.rotate;
@@ -17,6 +17,7 @@ Galleria.ready(function() {
       var rotate = (oldRotate + rotate) % 360;
       var scale = 1;
       if (rotate % 180 == 90) scale = img.height()/img.width();
+      if (gallery._userRatio > 1) scale = 1/scale;
       var transform = 'rotate('+rotate+'deg) scale('+scale+','+scale+')'
       data.rotate = rotate;
       img.css('-moz-transform', transform);
