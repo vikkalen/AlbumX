@@ -1,47 +1,45 @@
-body{
-  color: #aaa;
+body {
   background-color: #000;
+  padding-top: 50px;
 }
 
-h1{
-  font-size: 1.5em;
-  margin: 0 10px;
-  border-bottom: 1px solid #aaa;
+.navbar-brand a,
+.nav a{
+  color: #9d9d9d;
 }
-
-h1 a{
+.navbar-brand a{
   margin-left: 10px;
   margin-right: 10px;
 }
-#galleria{
-  float: left;
-  width: 80%;
-  margin-top: 20px;
-  margin-left: -1px;
-  border-left: 1px solid #aaa;
-}
-
-#menu{
-  float: left;
-  margin-top: 20px;
-  border-right: 1px solid #aaa;
-  width: 19%;
-}
-#navigation{
-  float: left;
-  padding-left: 20px;
-  list-style: none;
-}
-li{
-  margin-right: 10px;
-}
-a{
-  color: #aaa;
+.navbar-brand a:hover{
+  color: #fff;
   text-decoration: none;
 }
-#navigation a:visited{
-  color: #666;
+
+.nav > li > a:focus,
+.nav > li > a:hover {
+  background-color: #222;
 }
-a:hover, #navigation a:hover{
-  color: #fff;
+
+.sidebar {
+  position: fixed;
+  top: 51px;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  display: block;
+  padding: 20px;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+  border-right: 1px solid #9d9d9d;
+}
+
+.nav-sidebar {
+  margin-right: -21px; /* 20px padding + 1px border */
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+.nav-sidebar > li > a {
+  padding-right: 20px;
+  padding-left: 20px;
 }

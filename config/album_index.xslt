@@ -19,6 +19,11 @@
 <xsl:template match="head">
   <xsl:copy>
     <xsl:apply-templates select="*"/>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="{$resources_dir}/css/album.css" type="text/css"/>
     <link rel="stylesheet" href="{$resources_dir}/galleria/themes/classic/galleria.classic.css" type="text/css"/>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -64,14 +69,14 @@
 
 <xsl:template match="h1">
   <xsl:variable name="title" select="substring-after(., 'Index of /')"/>
-  <div id="header">
-    <h1>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-brand">
       <xsl:call-template name="thread">
         <xsl:with-param name="parents" select="''"/>
         <xsl:with-param name="children" select="$title"/>
       </xsl:call-template>
-    </h1>
-  </div>
+    </div>
+  </nav>
 </xsl:template>
 
 <xsl:template name="thread">
@@ -98,13 +103,19 @@
 <xsl:template match="hr"/>
 
 <xsl:template match="pre">
-  <div id="menu">
-    <ul id="navigation">
-      <xsl:apply-templates select="a" mode="navigation"/>
-    </ul>
-  </div>
-  <div id="galleria">
-    <xsl:apply-templates select="a" mode="image"/>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-4 col-sm-3 col-md-2 sidebar">
+        <ul class="nav nav-sidebar">
+          <xsl:apply-templates select="a" mode="navigation"/>
+        </ul>
+      </div>
+      <div class="col-xs-8 col-xs-offset-4 col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div id="galleria">
+          <xsl:apply-templates select="a" mode="image"/>
+        </div>
+      </div>
+    </div>
   </div>
 </xsl:template>
 
