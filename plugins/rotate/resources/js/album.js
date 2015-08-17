@@ -1,9 +1,10 @@
 Galleria.ready(function() {
     var gallery = this;
     this.addElement('rotate').appendChild('controls','rotate');
-    this.$('rotate').text('rotate').click(function(e) {
-      var img = $(gallery.getActiveImage());
-      gallery.rotate(img, gallery.getData(), 90);
+    this.$('rotate').addClass('glyphicon').addClass('glyphicon-repeat')
+      .click(function(e) {
+        var img = $(gallery.getActiveImage());
+        gallery.rotate(img, gallery.getData(), 90);
     });
     this.bind('loadfinish', function(e){
       gallery.rotate($(e.imageTarget), e.galleriaData, 0);

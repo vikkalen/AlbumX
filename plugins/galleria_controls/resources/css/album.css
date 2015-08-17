@@ -2,7 +2,7 @@
   padding: 2px;
   top: 10px;
   left: 10px;
-  width: 90px;
+  width: 100%;
   position: absolute;
   z-index: 2;
 }

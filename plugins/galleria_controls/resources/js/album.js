@@ -2,8 +2,9 @@ Galleria.ready(function() {
     var gallery = this;
     this.addElement('controls').appendChild('container','controls');
     this.addElement('fullscreen').appendChild('controls','fullscreen');
-    this.$('fullscreen').text('fullscreen').click(function(e) {
-      gallery.toggleFullscreen();
+    this.$('fullscreen').addClass('glyphicon').addClass('glyphicon-fullscreen')
+      .click(function(e) {
+        gallery.toggleFullscreen();
     });
     this.bind('fullscreen_enter', function(e){
       this.$('fullscreen').addClass('active');
@@ -12,8 +13,9 @@ Galleria.ready(function() {
       this.$('fullscreen').removeClass('active');
     });
     this.addElement('slideshow').appendChild('controls','slideshow');
-    this.$('slideshow').text('slideshow').click(function(e) {
-      gallery.playToggle();
+    this.$('slideshow').addClass('glyphicon').addClass('glyphicon-play')
+      .click(function(e) {
+        gallery.playToggle();
     });
     this.bind('play', function(e){
       this.$('slideshow').addClass('active');
@@ -23,6 +25,6 @@ Galleria.ready(function() {
     });
     var touch = Galleria.TOUCH;
     if (! touch ) {
-    	this.addIdleState(this.get('controls'), { left:-90 });
+    	this.addIdleState(this.get('controls'), { top:-26 });
     }
 });
