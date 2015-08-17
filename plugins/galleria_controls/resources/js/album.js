@@ -1,8 +1,10 @@
 Galleria.ready(function() {
     var gallery = this;
     this.addElement('controls').appendChild('container','controls');
+    this.$('controls').addClass('btn-group-xs');
+
     this.addElement('fullscreen').appendChild('controls','fullscreen');
-    this.$('fullscreen').addClass('glyphicon').addClass('glyphicon-fullscreen')
+    this.$('fullscreen').addClass('btn').addClass('glyphicon').addClass('glyphicon-fullscreen')
       .click(function(e) {
         gallery.toggleFullscreen();
     });
@@ -13,7 +15,7 @@ Galleria.ready(function() {
       this.$('fullscreen').removeClass('active');
     });
     this.addElement('slideshow').appendChild('controls','slideshow');
-    this.$('slideshow').addClass('glyphicon').addClass('glyphicon-play')
+    this.$('slideshow').addClass('btn').addClass('glyphicon').addClass('glyphicon-play')
       .click(function(e) {
         gallery.playToggle();
     });
@@ -25,6 +27,6 @@ Galleria.ready(function() {
     });
     var touch = Galleria.TOUCH;
     if (! touch ) {
-    	this.addIdleState(this.get('controls'), { top:-26 });
+    	this.addIdleState(this.get('controls'), { top:-28 });
     }
 });

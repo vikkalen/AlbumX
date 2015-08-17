@@ -22,16 +22,22 @@ body {
 }
 
 .sidebar {
-  position: fixed;
-  top: 51px;
-  bottom: 0;
-  left: 0;
-  z-index: 1000;
   display: block;
   padding: 20px;
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-  border-right: 1px solid #9d9d9d;
+  border-bottom: 1px solid #9d9d9d;
+}
+
+@media (min-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0; 
+    border-right: 1px solid #9d9d9d;
+    border-bottom: none;
+  }
 }
 
 .nav-sidebar {

@@ -1,7 +1,7 @@
 Galleria.ready(function() {
     var gallery = this;
     this.addElement('rotate').appendChild('controls','rotate');
-    this.$('rotate').addClass('glyphicon').addClass('glyphicon-repeat')
+    this.$('rotate').addClass('btn').addClass('glyphicon').addClass('glyphicon-repeat')
       .click(function(e) {
         var img = $(gallery.getActiveImage());
         gallery.rotate(img, gallery.getData(), 90);
