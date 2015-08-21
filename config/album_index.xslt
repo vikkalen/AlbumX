@@ -114,6 +114,9 @@
         <div id="galleria">
           <xsl:apply-templates select="a" mode="image"/>
         </div>
+        <div id="videos">
+          <xsl:apply-templates select="a" mode="video"/>
+        </div>
       </div>
     </div>
   </div>
@@ -128,6 +131,18 @@
         <xsl:attribute name="src"><xsl:value-of select="@href"/>?size=<xsl:value-of select="$size_thumb"/></xsl:attribute>
         <xsl:attribute name="data-link"><xsl:value-of select="@href"/></xsl:attribute>
       </xsl:element>
+    </xsl:element>
+  </xsl:if>
+</xsl:template>
+
+<xsl:template match="a" mode="video">
+  <xsl:variable name="extension" select="substring(@href, string-length(@href) - 3)"/>
+  <xsl:if test="$extension = '.mp4' or $extension = '.3gp'">
+    <xsl:element name="video">
+      <xsl:attribute name="width">100%</xsl:attribute>
+      <xsl:attribute name="controls"/>
+      <xsl:attribute name="preload">metadata</xsl:attribute>
+      <xsl:attribute name="src"><xsl:value-of select="@href"/></xsl:attribute>
     </xsl:element>
   </xsl:if>
 </xsl:template>
